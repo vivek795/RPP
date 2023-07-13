@@ -13,8 +13,10 @@ const { monitorEventLoopDelay } = require("perf_hooks");
 router.post("/checkUpdate", async(req, res) => {
     try{
         const checkData = await Game.findOne({id : 1});
+        console.log("Previous Check : ");
+        console.log(checkData);
 
-        if(checkData === null || checkData.user === null || checkData.user !== "Player" || checkData.isWait !== true){
+        if(checkData === null || checkData.user === null || checkData.isWait !== true){
             return res.status(200).json({success : false});
         }
 

@@ -28,10 +28,10 @@ router.post("/obstacleHit", async (req, res) => {
             const newUpdate = await Game.create(toUpdate);
         }
 
-        res.status(200).json("Obstacle Got Hit!");
+        return res.status(200).json("Obstacle Got Hit!");
     }
     catch(err){
-        res.status(500).json({error : err});
+        return res.status(500).json({error : err});
     }
 });
 
@@ -41,17 +41,26 @@ router.post("/checkWait", async (req, res) => {
         const checkData = await Game.findOne({id : 1});
 
         if(checkData === null){
-            res.status(400).json({error : "No Data Available!"});
+            return res.status(400).json({error : "No Data Available!"});
         }
 
         if(checkData.isWait === false  &&  checkData.user !== "Player"){
-            res.status(200).json({isWait : false , user : checkData.user, checkPoint : checkData.checkPoint});
+            const checkPoint = checkData.checkPoint;
+            const user = checkData.user;
+            
+            if(user === "Attacker") {
+                const updateData = await Game.findOneAndUpdate({id : 1}, {user : null, isWait : false });
+            }
+            else if(user === "Defender"){
+                const updateData = await Game.findOneAndUpdate({id : 1}, {user : "Player", isWait : false});
+            }
+            return res.status(200).json({isWait : false , user : checkData.user, checkPoint : checkPoint});
         }
 
-        res.status(200).json({isWait : true , user : null, checkPoint: null});
+        return res.status(200).json({isWait : true , user : null, checkPoint: null});
     }
     catch(err){
-        res.status(500).json({error : err});
+        return res.status(500).json({error : err});
     }
 });
 

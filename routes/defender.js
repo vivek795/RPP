@@ -95,32 +95,36 @@ router.post("/checkUpdate", async(req, res) => {
 
         let attackText;
 
-        if(checkPoint === 1){
+        if(checkPoint === "1"){
             checkPoint1.forEach(async (element) => {
                 if(element.attackName === attackName){
-                    attackText = element.attackText;
+                    attackText = element.text;
                 }
             })
         }
 
-        else if(checkPoint === 2){
+        else if(checkPoint === "2"){
             checkPoint2.forEach(async (element) => {
                 if(element.attackName === attackName){
-                    attackText = element.attackText;
+                    attackText = element.text;
                 }
             })
         }
 
-        else if(checkPoint === 3){
+        else if(checkPoint === "3"){
             checkPoint3.forEach(async (element) => {
                 if(element.attackName === attackName){
-                    attackText = element.attackText;
+                    attackText = element.text;
                 }
             })
         }
 
-        return res.status(200).json({success : true, attackName : attackText , checkPoint : checkData.checkPoint});
+        // console.log(attackText);
+        // console.log(checkData.checkPoint);
+
+        return res.status(200).json({success : true, attackName : attackName , checkPoint : checkPoint});
     }
+    
     catch(err){
         return res.status(500).json({error : "Internal Server Error"});
     }
@@ -141,7 +145,7 @@ router.post("/doDefend", async (req, res) => {
         // }
 
         
-        if(checkPoint === 1){
+        if(checkPoint === "1"){
             checkPoint1.forEach(async (element) => {
                 if(element.text === attackText){
                     if(element.defence === defendOption){
@@ -156,7 +160,7 @@ router.post("/doDefend", async (req, res) => {
             })
         }
 
-        else if(checkPoint === 2){
+        else if(checkPoint === "2"){
             checkPoint2.forEach(async (element) => {
                 if(element.text === attackText){
                     if(element.defence === defendOption){
@@ -171,7 +175,7 @@ router.post("/doDefend", async (req, res) => {
             })
         }
 
-        else if(checkPoint === 3){
+        else if(checkPoint === "3"){
             checkPoint3.forEach(async (element) => {
                 if(element.text === attackText){
                     if(element.defence === defendOption){
